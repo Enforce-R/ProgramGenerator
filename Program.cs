@@ -24,13 +24,14 @@ namespace CSharpTutorials
                 }
                 string[] files = Directory.GetFiles(fileDirectory, "*.epub");
 
+                List<Part> allParts = new();
+
                 foreach (string file in files)
                 {
                     List<Part> myData = await DataHandling.ExtractData(file);
-                    string dates = myData[0].getPartWeek() + "_" + myData[myData.Count - 1].getPartWeek();
-                    string title = Regex.Replace(dates, "[^α-ωΑ-Ωίέώύόά_]", "");
-                    await GenerateExcel.CreateExcelFile(myData, title);
+                    allParts.AddRange(myData);
                 }
+                await GenerateExcel.CreateExcelFile(allParts, "Generated_Πρόγραμμα");
             }
 
             catch (Exception ex)

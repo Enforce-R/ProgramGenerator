@@ -44,6 +44,7 @@ namespace ProgramGenerator.Models
 
     public enum PartType
     {
+        Verse,
         Week,
         Presenter,
         Song,
@@ -56,5 +57,6 @@ namespace ProgramGenerator.Models
         MinistryPart,
         Christians,
         ChristiansPart,
+        BibleStudy
     }
 }
