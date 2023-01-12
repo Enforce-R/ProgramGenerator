@@ -34,7 +34,7 @@ namespace CSharpTutorials
                 await GenerateExcel.CreateExcelFile(allParts, "Generated_Πρόγραμμα");
             }
 
-            catch (Exception ex)
+            catch (Exception ex) 
             {
                 Console.WriteLine(ex.Message);
             }

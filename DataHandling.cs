@@ -66,7 +66,7 @@ namespace ProgramGenerator
                 }
             }
             parts.Add(new Part(week, PartType.Week, "", week));
-            parts.Add(new Part(week, PartType.Song, "", getBetween(content, "\n\n\n \n ", "\n")));
+            parts.Add(new Part(week, PartType.Song, "", Regex.Match(getBetween(content, "\n\n\n \n ", "\n"), @"\d+").Value ));
             parts.Add(new Part(week, PartType.Presenter, "1", "Εισαγωγή"));
             parts.Add(new Part(week, PartType.TreasureSpeech, "10", "«" + getBetween(content, "«", "»") + "»"));
             parts.Add(new Part(week, PartType.TreasureGems, "10", verse));
@@ -79,6 +79,10 @@ namespace ProgramGenerator
             {
                 for (string line = reader.ReadLine(); line != null; line = reader.ReadLine())
                 {
+                    if (line.Contains("th"))
+                    {
+                        parts.Add(new Part(week, PartType.MinistryPart, getBetween(line, ": (", "λεπτά"), line));
+                    }
                     parts.Add(new Part(week, PartType.MinistryPart, getBetween(line, ": (", "λεπτά"), line));
                     // getBetween(line, line.Substring(0, 1), ": (") + line[(line.LastIndexOf('('))..])
                 }
@@ -89,7 +93,7 @@ namespace ProgramGenerator
                 {
                     if (line.Contains("Ύμνος"))
                     {
-                        parts.Add(new Part(week, PartType.Song, "", line));
+                        parts.Add(new Part(week, PartType.Song, "", Regex.Match(line, @"\d+").Value));
                     }
                     else if (line.Contains("Τελικά Σχόλια"))
                     {
@@ -106,7 +110,6 @@ namespace ProgramGenerator
                         {
                             parts.Add(new Part(week, PartType.ChristiansPart, getBetween(line, ": (", "λεπτά"), getBetween(line, line.Substring(0, 1), ": (")));
                         }
-                        
                     }
                 }
             }

@@ -28,16 +28,14 @@ namespace ProgramGenerator
 
                 worksheet.Cell("A1").Value = "Εβδομάδα";
                 worksheet.Cell("A1").Style.Font.SetFontColor(XLColor.White).Fill.SetBackgroundColor(XLColor.Black);
-                worksheet.Cell("B1").Value = "Εισαγωγή";
-                worksheet.Cell("B1").Style.Font.SetFontColor(XLColor.White).Fill.SetBackgroundColor(XLColor.Black);
 
-                worksheet.Cell("C1").Value = "Προσευχή";
+                worksheet.Cell("B1").Value = "Ύμνος 1";
+                worksheet.Cell("C1").Value = "Ύμνος 2";
+                worksheet.Cell("D1").Value = "Ύμνος 3";
 
                 worksheet.Cell("E1").Value = "Ομιλία";
                 worksheet.Cell("E2").Value = "Θέμα";
-                worksheet.Cell("D2").Value = "Διάρκεια";
-
-                worksheet.Cell("D2").Value = "Διάρκεια";
+                worksheet.Cell("F2").Value = "Διάρκεια";
 
                 worksheet.Cell("H1").Value = "Πετράδια";
                 worksheet.Cell("H2").Value = "Θέμα";
@@ -46,42 +44,42 @@ namespace ProgramGenerator
                 worksheet.Cell("K1").Value = "Ανάγνωση";
                 worksheet.Cell("J2").Value = "Διάρκεια";
                 worksheet.Cell("K2").Value = "Πηγή";
-                worksheet.Cell("L2").Value = "Μέρος";
+                worksheet.Cell("L2").Value = "Σημείο";
 
                 worksheet.Cell("O1").Value = "Διακονία 1";
                 worksheet.Cell("N2").Value = "Διάρκεια";
                 worksheet.Cell("O2").Value = "Πηγή";
-                worksheet.Cell("P2").Value = "Μέρος";
+                worksheet.Cell("P2").Value = "Σημείο";
 
                 worksheet.Cell("S1").Value = "Διακονία 2";
                 worksheet.Cell("R2").Value = "Διάρκεια";
                 worksheet.Cell("S2").Value = "Πηγή";
-                worksheet.Cell("T2").Value = "Μέρος";
+                worksheet.Cell("T2").Value = "Σημείο";
 
                 worksheet.Cell("W1").Value = "Διακονία 3";
                 worksheet.Cell("V2").Value = "Διάρκεια";
                 worksheet.Cell("W2").Value = "Πηγή";
-                worksheet.Cell("X2").Value = "Μέρος";
+                worksheet.Cell("X2").Value = "Σημείο";
 
                 worksheet.Cell("AA1").Value = "Χριστιανοί 1";
                 worksheet.Cell("Z2").Value = "Διάρκεια";
                 worksheet.Cell("AA2").Value = "Πηγή";
-                worksheet.Cell("AB2").Value = "Μέρος";
+                worksheet.Cell("AB2").Value = "Σημείο";
 
                 worksheet.Cell("AE1").Value = "Χριστιανοί 2";
                 worksheet.Cell("AD2").Value = "Διάρκεια";
                 worksheet.Cell("AE2").Value = "Πηγή";
-                worksheet.Cell("AF2").Value = "Μέρος";
+                worksheet.Cell("AF2").Value = "Σημείο";
 
                 worksheet.Cell("AI1").Value = "Χριστιανοί 3";
                 worksheet.Cell("AH2").Value = "Διάρκεια";
                 worksheet.Cell("AI2").Value = "Πηγή";
-                worksheet.Cell("AJ2").Value = "Μέρος";
+                worksheet.Cell("AJ2").Value = "Σημείο";
 
                 worksheet.Cell("AM1").Value = "Μελέτη";
                 worksheet.Cell("AL2").Value = "Διάρκεια";
                 worksheet.Cell("AM2").Value = "Πηγή";
-                worksheet.Cell("AN2").Value = "Μέρος";
+                worksheet.Cell("AN2").Value = "Σημείο";
 
                 worksheet.Cell("AQ1").Value = "Προσευχή";
                 worksheet.Cell("AR1").Value = "Ύμνος";
@@ -91,6 +89,7 @@ namespace ProgramGenerator
                 int currentLine = 3;
                 int ministryPartCount = 0;
                 int christianPartCount = 0;
+                int songPartCount = 0;
                 for (var i = 0; i < parts.Count; i++)
                 {
 
@@ -108,13 +107,26 @@ namespace ProgramGenerator
                         case PartType.Presenter:
                             break;
                         case PartType.Song:
+                            if (songPartCount == 0)
+                            {
+                                worksheet.Cell($"B{currentLine}").Value = partDescription;
+                            }
+                            else if (songPartCount == 1)
+                            {
+                                worksheet.Cell($"C{currentLine}").Value = partDescription;
+                            }
+                            else
+                            {
+                                worksheet.Cell($"D{currentLine}").Value = partDescription;
+                            }
+                            songPartCount += 1;
                             break;
                         case PartType.Prayer:
                             break;
                         case PartType.Treasures:
                             break;
                         case PartType.TreasureSpeech:
-                            worksheet.Cell($"D{currentLine}").Value = partDuration;
+                            worksheet.Cell($"F{currentLine}").Value = partDuration;
                             worksheet.Cell($"E{currentLine}").Value = partDescription;
                             break;
                         case PartType.TreasureGems:
@@ -178,6 +190,7 @@ namespace ProgramGenerator
                         currentLine++;
                         ministryPartCount = 0;
                         christianPartCount = 0;
+                        songPartCount = 0;
                     }
                     //if (part.getPartType() == PartType.Treasures)
                     //{
